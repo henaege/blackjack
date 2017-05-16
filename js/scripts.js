@@ -30,9 +30,31 @@ $(document).ready(function() {
         placeCard('player', 2, playersHand[1]);
         placeCard('dealer', 2, dealersHand[1]);
 
+        calculateTotal(playersHand,'player')
+        calculateTotal(dealersHand,'dealer')
+
         console.log(playersHand);
         console.log(dealersHand);
     });
+
+    $('.hit-button').click(function() {
+        playersHand.push(theDeck.shift());
+        placeCard('player',playersHand.length,playersHand[playersHand.length-1])
+        calculateTotal(playersHand, 'player')
+        
+    })
+
+    function calculateTotal(hand, who) {
+        var total = 0;
+        var thisCardValue = 0;
+        for (i = 0; i < hand.length; i++) {
+            thisCardValue = Number(hand[i].slice(0,-1));
+            total += thisCardValue;
+        }
+        console.log(total);
+        var classSelector = '.' + who + '-total';
+        $(classSelector).html(total);
+    }
 
     function placeCard(who, where, cardToPlace) {
         var classSelector = '.' + who + '-cards .card-' + where;
