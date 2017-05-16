@@ -39,10 +39,32 @@ $(document).ready(function() {
 
     $('.hit-button').click(function() {
         playersHand.push(theDeck.shift());
-        placeCard('player',playersHand.length,playersHand[playersHand.length-1])
-        calculateTotal(playersHand, 'player')
+        placeCard('player',playersHand.length,playersHand[playersHand.length-1]);
+        calculateTotal(playersHand, 'player');
         
     })
+
+    $('.stand-button').click(function() {
+        var dealerTotal = calculateTotal(dealersHand, 'dealer');
+        while(dealerTotal < 17) {
+            dealersHand.push(theDeck.shift());
+            placeCard('dealer',dealersHand.length, dealersHand[dealersHand.length-1]);
+            dealerTotal = calculateTotal(dealersHand, 'dealer');
+        }
+        chackWin();
+    })
+
+    function checkWin() {
+        var playerTotal = calculateTotal(playersHand, 'player');
+        var delaerTotal = calculateTotal(dealersHand, 'dealer');
+        // if player > 21 ... play busts and loses
+        // if dealer > 21 ... dealer busts and loses
+        if playersHand.length = 2 AND playertotal = 21 ... BlackJack!
+        if dealersHand.length = 2 AND dealertotal = 21 ... BlackJack!
+        // if player > dealer ... player wins
+        // if dealer > player ... dealer wins
+        // else tie
+    }
 
     function calculateTotal(hand, who) {
         var total = 0;
@@ -54,6 +76,7 @@ $(document).ready(function() {
         console.log(total);
         var classSelector = '.' + who + '-total';
         $(classSelector).html(total);
+        return total;
     }
 
     function placeCard(who, where, cardToPlace) {
